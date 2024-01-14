@@ -20,3 +20,13 @@ ConnectDB()
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || `Interval Server Error`;
+  return res.status(statusCode).json({
+    success: false,
+    message,
+    statusCode,
+  });
+});
