@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "backend of the mern auth app",
-  "main": "index.js",
+  "main": "server/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
   },
   "author": "Yashraj Thakur",
   "license": "ISC",
