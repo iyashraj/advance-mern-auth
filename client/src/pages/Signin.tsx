@@ -1,5 +1,11 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  signinFailureHandler,
+  signinHandler,
+  signinSuccessHandler,
+} from "../redux/user/user.slice";
+import { useDispatch, useSelector } from "react-redux";
 
 interface FormData {
   [key: string]: string | undefined;
@@ -7,18 +13,16 @@ interface FormData {
 
 const Signin: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-
+  const {loading, error} = useSelector((store)=> store.user)
+  const dispatch = useDispatch();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
   };
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError(false);
+    dispatch(signinHandler());
     try {
       const res = await fetch("/api/auth/signin", {
         method: "POST",
@@ -27,19 +31,16 @@ const Signin: React.FC = () => {
         },
         body: JSON.stringify(formData),
       });
-      console.log(res);
       if (!res.ok) {
-        setIsLoading(false);
-        setError(true);
-        throw new Error("Failed to sign up");
+        dispatch(signinFailureHandler(res.statusText));
+        return
       }
 
       const data = await res.json();
-      console.log(data);
-      navigate("/")
+      dispatch(signinSuccessHandler(data));
+      navigate("/");
     } catch (error: any) {
-      setIsLoading(false);
-      setError(true);
+      dispatch(signinFailureHandler(error));
     }
   };
   return (
@@ -61,9 +62,9 @@ const Signin: React.FC = () => {
           onChange={handleChange}
         />
         <button
-          disabled={isLoading}
+          disabled={loading}
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          {isLoading ? "Loading..." : "Sign In"}
+          {loading ? "Loading..." : "Sign In"}
         </button>
       </form>
       <div className="flex gap-2 mt-5">
@@ -73,7 +74,7 @@ const Signin: React.FC = () => {
           <span className="text-blue-500">Sign Up</span>
         </Link>
       </div>
-      {error && <p className="text-red-500">Something went wrong!</p>}
+      {error && <p className="text-red-500">{error || 'Something went wrong!'}</p>}
     </div>
   );
 };
