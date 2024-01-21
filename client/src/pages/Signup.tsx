@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface FormData {
   [key: string]: string | undefined;
@@ -14,7 +14,7 @@ const Signup: React.FC = () => {
     const { id, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
   };
-
+  const navigate = useNavigate()
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -35,7 +35,7 @@ const Signup: React.FC = () => {
       }
 
       const data = await res.json();
-      console.log(data);
+      navigate("/")
     } catch (error: any) {
       setIsLoading(false);
       setError(true);
