@@ -6,6 +6,7 @@ import {
   signinSuccessHandler,
 } from "../redux/user/user.slice";
 import { useDispatch, useSelector } from "react-redux";
+import Oauth from "../components/Oauth";
 
 interface FormData {
   [key: string]: string | undefined;
@@ -13,7 +14,7 @@ interface FormData {
 
 const Signin: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({});
-  const {loading, error} = useSelector((store)=> store.user)
+  const { loading, error } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -33,7 +34,7 @@ const Signin: React.FC = () => {
       });
       if (!res.ok) {
         dispatch(signinFailureHandler(res.statusText));
-        return
+        return;
       }
 
       const data = await res.json();
@@ -66,6 +67,7 @@ const Signin: React.FC = () => {
           className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
           {loading ? "Loading..." : "Sign In"}
         </button>
+        <Oauth />
       </form>
       <div className="flex gap-2 mt-5">
         <p>Don't have an account?</p>
@@ -74,7 +76,9 @@ const Signin: React.FC = () => {
           <span className="text-blue-500">Sign Up</span>
         </Link>
       </div>
-      {error && <p className="text-red-500">{error || 'Something went wrong!'}</p>}
+      {error && (
+        <p className="text-red-500">{error || "Something went wrong!"}</p>
+      )}
     </div>
   );
 };
