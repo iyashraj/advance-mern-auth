@@ -14,7 +14,7 @@ interface FormData {
 
 const Signin: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({});
-  const { loading, error } = useSelector((store) => store.user);
+  const { loading, error } = useSelector((state:any) => state.user);
   const dispatch = useDispatch();
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
