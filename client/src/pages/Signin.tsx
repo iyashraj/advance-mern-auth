@@ -41,7 +41,7 @@ const Signin: React.FC = () => {
       dispatch(signinSuccessHandler(data));
       navigate("/");
     } catch (error: any) {
-      dispatch(signinFailureHandler(error));
+      dispatch(signinFailureHandler(error.message));
     }
   };
   return (
