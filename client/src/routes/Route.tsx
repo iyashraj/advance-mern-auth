@@ -17,6 +17,5 @@ export const routes: RouteConfig[] = [
   { path: "/about", element: <About /> },
   { path: "/signin", element: <Signin /> },
   { path: "/signup", element: <Signup /> },
-  { path: "/profile", element: <Profile /> },
   { path: "*", element: <NotFound /> },
 ];

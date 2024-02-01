@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default:"https://www.google.com/url?sa=i&url=https%3A%2F%2Fxsgames.co%2Frandomusers%2F&psig=AOvVaw2PFgEI5aOLnSQydZFv3mL-&ust=1706718712048000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCJCRv-zEhYQDFQAAAAAdAAAAABAE"
+      default:"https://chatsense.in.net/fb9afa84739c3239a0f5a57153fa5e9e2367f1adb4d2ef9a2c47f2cba31a74b0/8985aa82-ad55-4c9d-b135-e1a8f6169b73.png"
     },
   },
   { timestamps: true }
